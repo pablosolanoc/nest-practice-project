@@ -10,12 +10,15 @@ import {
 import { SeedService } from './seed.service';
 import { CreateSeedDto } from './dto/create-seed.dto';
 import { UpdateSeedDto } from './dto/update-seed.dto';
+import { Auth } from 'src/auth/decorators/auth.decorator';
+import { ValidRoles } from 'src/auth/interfaces';
 
 @Controller('seed')
 export class SeedController {
   constructor(private readonly seedService: SeedService) {}
 
   @Get()
+  @Auth(ValidRoles.admin)
   executeSeed() {
     return this.seedService.runSeed();
   }

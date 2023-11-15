@@ -1,9 +1,11 @@
+import { Product } from 'src/products/entities';
 import { text } from 'stream/consumers';
 import {
   BeforeInsert,
   BeforeUpdate,
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -18,6 +20,9 @@ export class User {
     unique: true,
   })
   email: string;
+
+  @OneToMany(() => Product, (product) => product.user)
+  product: Product;
 
   @Column({
     type: 'text',

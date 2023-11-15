@@ -75,4 +75,19 @@ export class AuthService {
     const token = this.jwtService.sign(payload);
     return token;
   }
+
+  async checkAuthStatus(user: User) {
+    const userFromDatabase = await this.userRepository.findOne({
+      where: {
+        id: user.id,
+      },
+      select: {
+        id: true,
+        email: true,
+        password: true,
+      },
+    });
+
+    return { ...userFromDatabase, token: this.getJwtToken({ id: user.id }) };
+  }
 }
